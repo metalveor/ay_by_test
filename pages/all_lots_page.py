@@ -32,6 +32,14 @@ type_button = (By.CSS_SELECTOR, 'label[for="tab_1"]')
 condition_button = (By.CSS_SELECTOR, 'label[for="condition_id_1"]')
 price_byn_from = (By.CSS_SELECTOR, 'input[id="inp1_cost_byr"]')
 price_byn_to = (By.CSS_SELECTOR, 'input[id="inp2_cost_byr"]')
+choose_location_button = (By.CSS_SELECTOR, 'label[for="city_id_5"]')
+request_location = (By.CSS_SELECTOR, 'a[class="filters__sqcheckers__item"]')
+lots_location = (By.CSS_SELECTOR, 'div[class="b-seller-info__line"]')
+five_star = (By.CSS_SELECTOR, 'div[class="filters__rating__stars"]')
+clicked_star = (By.CSS_SELECTOR, 'span[class="fm-star filters__rating__star filters__rating__star_3 filters__rating__star_sel filters__rating__checked"]')
+seller_info = (By.CSS_SELECTOR, 'span[class="b-seller-info-summary__rating-stars b-seller-info-summary__rating-stars_5"]')
+block = (By.CSS_SELECTOR, 'div[class="filters__rating"]')
+
 
 class AllLotsPage(BasePage):
     def __init__(self, driver):
@@ -57,10 +65,10 @@ class AllLotsPage(BasePage):
         self.find_element(relevant_button).click()
         self.find_element(expensive_button).click()
 
-    def most_relevant_result(self):
+    def first_lot_on_page(self):
         return self.find_element(first_lot).text
 
-    def less_relevant_result(self):
+    def last_lot_on_page(self):
         return self.find_element(last_lot).text
 
     def change_list_view(self):
@@ -97,9 +105,6 @@ class AllLotsPage(BasePage):
     def click_next_page_button(self):
         self.find_element(next_page_button).click()
 
-    # def check_next_page_opened(self):
-    #     print(self.driver.current_url)
-
     def current_page_number(self):
         return int(self.find_element(current_page_button).text)
 
@@ -118,7 +123,7 @@ class AllLotsPage(BasePage):
     def name_of_clicked_section(self):
         return self.find_elements(all_sections)[-1].text
 
-    def check_box_set(self):
+    def checkbox_set(self):
         self.find_element(relisted_button).click()
         self.find_element(type_button).click()
         self.find_element(condition_button).click()
@@ -135,4 +140,24 @@ class AllLotsPage(BasePage):
     def enter_price_details(self, price_from, price_to):
         self.find_element(price_byn_from).send_keys(price_from)
         self.find_element(price_byn_to).send_keys(price_to)
-        assert True
+
+    def click_button_chosen_location(self):
+        self.find_element(choose_location_button).click()
+
+    def location_request(self):
+        return self.find_element(request_location).text
+
+    def actual_lot_location(self):
+        return self.find_element(lots_location).text
+
+    def click_any_lot(self):
+        self.find_elements(all_lots_on_page)[0].click()
+
+    def select_five_star_rating(self):
+        self.find_element(five_star).click()
+
+    def rating_request(self):
+        return int(self.find_element(clicked_star).get_attribute("data-value"))
+
+    def actual_seller_rating(self):
+        return float(''.join(x for x in self.find_element(seller_info).get_attribute("title") if x.isdigit() or x == "."))

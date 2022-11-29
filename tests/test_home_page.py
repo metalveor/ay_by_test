@@ -30,7 +30,7 @@ class TestLogIn:
         home_page = HomePage(driver)
         home_page.open_home_page()
         home_page.click_login_button()
-        home_page.login()
+        home_page.authorization()
         home_page.logout(driver)
         assert home_page.logout_passed(), 'Logout failed'
 
@@ -79,7 +79,7 @@ class TestContent:
         home_page = HomePage(driver)
         home_page.open_home_page()
         home_page.click_login_button()
-        home_page.login()
+        home_page.authorization()
         sleep(1)  # page loading
         home_page.add_product_to_favor()
         sleep(1)  # page loading
@@ -127,7 +127,7 @@ class TestHeader:
         home_page = HomePage(driver)
         home_page.open_home_page()
         home_page.click_login_button()
-        home_page.login()
+        home_page.authorization()
         sleep(1)  # page loading
         home_page.click_create_lot_button()
         assert 'Создание лота' == home_page.title_of_creating_lot_page()

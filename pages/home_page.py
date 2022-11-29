@@ -43,12 +43,6 @@ class HomePage(BasePage):
     def open_home_page(self):
         self.open_page(home_page_url)
 
-    def click_login_button(self):
-        self.find_element(login_button).click()
-
-    def login(self):
-        self.enter_login_details(email=settings.email, password=settings.password)
-
     def login_passed(self):
         return self.find_element(user_name_field).is_displayed()
 

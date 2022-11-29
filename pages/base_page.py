@@ -1,11 +1,13 @@
 from selenium.webdriver.chrome.webdriver import WebDriver  # for select annotation
 from selenium.webdriver.common.by import By
+import settings
 
 by_email = (By.CSS_SELECTOR, 'a[class="i-nav-tabs__link"]')
 email_field = (By.CSS_SELECTOR, 'input[type="email"]')
 password_field = (By.CSS_SELECTOR, 'input[type="password"]')
 enter_button = (By.CSS_SELECTOR, 'button[form="loginForm"]')
 add_favor_button = (By.CSS_SELECTOR, 'div[class="b-lot-title__sub-aside"]')
+login_button = (By.CSS_SELECTOR, 'li[class="top-panel__userbar__li"]')
 
 
 class BasePage:
@@ -14,6 +16,9 @@ class BasePage:
 
     def open_page(self, page_url):
         self.driver.get(page_url)
+
+    def click_login_button(self):
+        self.find_element(login_button).click()
 
     def enter_login_details(self, email, password):
         self.find_element(by_email).click()
@@ -29,3 +34,6 @@ class BasePage:
 
     def scroll_page_to_bottom(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+    def authorization(self):
+        self.enter_login_details(email=settings.email, password=settings.password)
