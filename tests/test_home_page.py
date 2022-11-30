@@ -1,7 +1,6 @@
 import pytest
 from pages.home_page import HomePage
 import settings
-from time import sleep
 
 
 class TestLogIn:
@@ -80,9 +79,7 @@ class TestContent:
         home_page.open_home_page()
         home_page.click_login_button()
         home_page.authorization()
-        sleep(1)  # page loading
         home_page.add_product_to_favor()
-        sleep(1)  # page loading
         assert 'в избранном' in home_page.add_to_favor_txt(), 'Not in favorites'
 
     def test_select_recommended_lots(self, driver):
@@ -128,7 +125,6 @@ class TestHeader:
         home_page.open_home_page()
         home_page.click_login_button()
         home_page.authorization()
-        sleep(1)  # page loading
         home_page.click_create_lot_button()
         assert 'Создание лота' == home_page.title_of_creating_lot_page()
 

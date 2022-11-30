@@ -1,6 +1,7 @@
 from selenium.webdriver.chrome.webdriver import WebDriver  # for select annotation
 from selenium.webdriver.common.by import By
 import settings
+from time import sleep
 
 by_email = (By.CSS_SELECTOR, 'a[class="i-nav-tabs__link"]')
 email_field = (By.CSS_SELECTOR, 'input[type="email"]')
@@ -37,3 +38,4 @@ class BasePage:
 
     def authorization(self):
         self.enter_login_details(email=settings.email, password=settings.password)
+        sleep(1)  # page loading

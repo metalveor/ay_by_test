@@ -82,6 +82,7 @@ class HomePage(BasePage):
     def add_product_to_favor(self):
         (self.find_elements(all_lots_on_page))[-1].click()
         self.find_element(add_to_favor_button).click()
+        sleep(1)  # page loading
 
     def add_to_favor_txt(self):
         return self.find_element(add_to_favor_button).text.lower()

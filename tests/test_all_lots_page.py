@@ -1,7 +1,5 @@
 import pytest
 from pages.all_lots_page import AllLotsPage
-import settings
-from time import sleep
 
 
 class TestHeadFilters:
