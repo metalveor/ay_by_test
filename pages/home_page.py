@@ -11,8 +11,8 @@ login_button = (By.CSS_SELECTOR, 'li[class="top-panel__userbar__li"]')
 user_name_field = (By.CSS_SELECTOR, 'span[class="top-panel__userbar__user__name"]')
 user_name_field_elements = (By.CSS_SELECTOR, 'span[class="top-panel__userbar__ppnav__name"]')
 login_alert = (By.CSS_SELECTOR, 'div[class="i-input-group__popover i-input-group__popover_login i-input-group__popover_visible"]')
-search_field = (By.CSS_SELECTOR, 'input[id="top-s"]')
-find_button = (By.CSS_SELECTOR, 'button[class="top-panel__search__btn"]')
+
+
 search_answer = (By.CSS_SELECTOR, 'h1[class="section-title section-title_small"]')
 sections = (By.CSS_SELECTOR, 'li[class="main-nav__list__li main-nav__list__li_wnav"]')
 change_section_request = (By.CSS_SELECTOR, 'a[href="http://coins.ay.by/belarus-posle-1991/"]')
@@ -55,15 +55,6 @@ class HomePage(BasePage):
 
     def logout_passed(self):
         return self.find_element(login_button).is_displayed()
-
-    def click_search_field(self):
-        self.find_element(search_field).click()
-
-    def enter_search_details(self, subject_of_search):
-        self.find_element(search_field).send_keys(subject_of_search)
-
-    def click_find_button(self):
-        self.find_element(find_button).click()
 
     def search_answer_txt(self):
         return self.find_element(search_answer).text.lower()

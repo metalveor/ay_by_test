@@ -10,6 +10,8 @@ enter_button = (By.CSS_SELECTOR, 'button[form="loginForm"]')
 add_favor_button = (By.CSS_SELECTOR, 'div[class="b-lot-title__sub-aside"]')
 login_button = (By.CSS_SELECTOR, 'li[class="top-panel__userbar__li"]')
 
+search_field = (By.CSS_SELECTOR, 'input[id="top-s"]')
+find_button = (By.CSS_SELECTOR, 'button[class="top-panel__search__btn"]')
 
 class BasePage:
     def __init__(self, driver: WebDriver):
@@ -39,3 +41,12 @@ class BasePage:
     def authorization(self):
         self.enter_login_details(email=settings.email, password=settings.password)
         sleep(1)  # page loading
+
+    def click_search_field(self):
+        self.find_element(search_field).click()
+
+    def enter_search_details(self, subject_of_search):
+        self.find_element(search_field).send_keys(subject_of_search)
+
+    def click_find_button(self):
+        self.find_element(find_button).click()
