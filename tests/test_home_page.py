@@ -1,4 +1,5 @@
 import pytest
+import allure
 from pages.home_page import HomePage
 import settings
 
@@ -10,6 +11,7 @@ class TestLogIn:
         home_page.open_home_page()
         home_page.click_login_button()
         home_page.enter_login_details(email=settings.email, password=settings.password)
+        home_page.click_enter_button()
         assert home_page.login_passed(), 'Login failed'
 
     CREDENTIALS = [
@@ -23,6 +25,7 @@ class TestLogIn:
         home_page.open_home_page()
         home_page.click_login_button()
         home_page.enter_login_details(email=creds['login'], password=creds['passwd'])
+        home_page.click_enter_button()
         assert home_page.login_failed(), 'Login passed'
 
     def test_logout(self, driver):
@@ -44,12 +47,12 @@ class TestContent:
         home_page.click_search_field()
         home_page.enter_search_details(sub)
         home_page.click_find_button()
-        assert 'найдено' in home_page.search_answer_txt(), 'Not found'
+        assert 'найдено' in home_page.search_result(), 'Not found'
 
     ERROR_SUBJECT = [
-        {'need': 'топор', 'have': 'njgjh'},
-        {'need': 'машина', 'have': 'vfibyf'},
-        {'need': 'монета', 'have': 'vjytnf'}
+        {'answer': 'топор', 'request': 'njgjh'},
+        {'answer': 'машина', 'request': 'vfibyf'},
+        {'answer': 'монета', 'request': 'vjytnf'}
     ]
 
     @pytest.mark.parametrize('e_sub', ERROR_SUBJECT)
@@ -57,15 +60,15 @@ class TestContent:
         home_page = HomePage(driver)
         home_page.open_home_page()
         home_page.click_search_field()
-        home_page.enter_search_details(e_sub['have'])
+        home_page.enter_search_details(e_sub['request'])
         home_page.click_find_button()
-        assert e_sub['need'] in home_page.search_answer_txt()
+        assert e_sub['answer'] in home_page.search_result()
 
     def test_change_section(self, driver):
         home_page = HomePage(driver)
         home_page.open_home_page()
         home_page.change_section(driver)
-        assert home_page.change_section_request_txt() == home_page.change_section_result_txt(), 'Section not changed'
+        assert home_page.change_section_request() == home_page.change_section_result(), 'Section not changed'
 
     def test_go_to_any_lot_page(self, driver):
         home_page = HomePage(driver)
@@ -79,21 +82,23 @@ class TestContent:
         home_page.open_home_page()
         home_page.click_login_button()
         home_page.authorization()
+        home_page.click_any_lot()
         home_page.add_product_to_favor()
-        assert 'в избранном' in home_page.add_to_favor_txt(), 'Not in favorites'
+        assert 'в избранном' in home_page.check_lot_added_in_favor(), 'Not in favorites'
 
-    def test_select_recommended_lots(self, driver):
+    def test_choose_featured_lots(self, driver):
         home_page = HomePage(driver)
         home_page.open_home_page()
-        request_recommended_lots = home_page.recommended_lots_request()
-        home_page.select_recommended_lots()
-        assert request_recommended_lots == home_page.recommended_lots_result(),\
-            'Recommended lots not selected'
+        request_featured_lots = home_page.featured_lots_request()
+        home_page.choose_featured_lots()
+        assert request_featured_lots == home_page.featured_lots_result(),\
+            'Featured lots not selected'
 
-    def test_reset_recommended_lots(self, driver):
+    def test_reset_featured_lots(self, driver):
         home_page = HomePage(driver)
         home_page.open_home_page()
-        home_page.reset_recommended_lots()
+        home_page.choose_featured_lots()
+        home_page.reset_featured_lots()
         assert home_page.all_lots_is_displayed(), 'All lots isnt displayed '
 
     def test_total_number_of_lots(self, driver):
@@ -117,8 +122,9 @@ class TestHeader:
     def test_change_of_location(self, driver):
         home_page = HomePage(driver)
         home_page.open_home_page()
-        home_page.change_of_location()
-        assert home_page.changed_location() in home_page.request_location(), 'Location wasnt changed '  # mark
+        home_page.click_location_button()
+        home_page.select_wish_location()
+        assert home_page.actual_location() in home_page.request_location(), 'Location wasnt changed '  # mark
 
     def test_create_lot_button(self, driver):
         home_page = HomePage(driver)

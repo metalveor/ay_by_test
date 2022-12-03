@@ -23,8 +23,8 @@ product_header = (By.CSS_SELECTOR, 'h1[class="b-lot-title__title"]')
 my_location = (By.CSS_SELECTOR, 'li[class="top-panel__hnav__li top-panel__hnav__withdrop"]')
 wish_location = (By.CSS_SELECTOR, 'a[href="http://ay.by/personal/city.phtml?cid=5&cid_only=0&next=http%3A%2F%2Fay.by%2F"]')
 main_logo = (By.CSS_SELECTOR, 'div[class="top-panel__logo"]')
-recommended_lots_request = (By.CSS_SELECTOR, 'a[href="http://ay.by/popular/"]')
-recommended_lots_result = (By.CSS_SELECTOR, 'a[href="http://ay.by/topic.phtml?topic=popular"]')
+featured_lots_request = (By.CSS_SELECTOR, 'a[href="http://ay.by/popular/"]')
+featured_lots_result = (By.CSS_SELECTOR, 'a[href="http://ay.by/topic.phtml?topic=popular"]')
 clear_button = (By.CSS_SELECTOR, 'li[class="filters__sqcheckers__li"]')
 all_lots_button = (By.CSS_SELECTOR, 'span[data-aimnav-id="#list-types-content"]')
 news_ay_by = (By.CSS_SELECTOR, 'div[class="news-headlines__col-1"]')
@@ -56,55 +56,55 @@ class HomePage(BasePage):
     def logout_passed(self):
         return self.find_element(login_button).is_displayed()
 
-    def search_answer_txt(self):
+    def search_result(self):
         return self.find_element(search_answer).text.lower()
 
     def change_section(self, driver):
         ActionChains(driver).move_to_element((self.find_elements(sections))[0]).click(
             self.find_element(change_section_request)).perform()
 
-    def change_section_request_txt(self):
+    def change_section_request(self):
         return self.find_element(change_section_request).get_attribute("innerText").lower()
         # return self.find_element(change_section_request).text.lower()  <- doesn't work?
 
-    def change_section_result_txt(self):
+    def change_section_result(self):
         return self.find_element(change_section_result).text.lower()
 
     def add_product_to_favor(self):
-        (self.find_elements(all_lots_on_page))[-1].click()
         self.find_element(add_to_favor_button).click()
         sleep(1)  # page loading
 
-    def add_to_favor_txt(self):
+    def check_lot_added_in_favor(self):
         return self.find_element(add_to_favor_button).text.lower()
 
     def my_location_is_displayed(self):
         return self.find_element(my_location).is_displayed()
 
-    def change_of_location(self):
+    def click_location_button(self):
         self.find_element(my_location).click()
+
+    def select_wish_location(self):
         self.find_element(wish_location).click()
 
     def request_location(self):
         return self.find_element(wish_location).get_attribute("innerText")
 
-    def changed_location(self):
+    def actual_location(self):
         return self.find_element(my_location).text
 
     def logo_is_displayed(self):
         return self.find_element(main_logo).is_displayed()
 
-    def select_recommended_lots(self):
-        self.find_element(recommended_lots_request).click()
+    def choose_featured_lots(self):
+        self.find_element(featured_lots_request).click()
 
-    def recommended_lots_request(self):
-        return self.find_element(recommended_lots_request).text
+    def featured_lots_request(self):
+        return self.find_element(featured_lots_request).text
 
-    def recommended_lots_result(self):
-        return self.find_element(recommended_lots_result).text
+    def featured_lots_result(self):
+        return self.find_element(featured_lots_result).text
 
-    def reset_recommended_lots(self):
-        self.select_recommended_lots()
+    def reset_featured_lots(self):
         self.find_element(clear_button).click()
 
     def all_lots_is_displayed(self):
@@ -123,10 +123,10 @@ class HomePage(BasePage):
         return len(self.find_elements(all_lots_on_page))
 
     def click_any_lot(self):
-        self.find_elements(all_lots_on_page)[0].click()
+        self.find_elements(all_lots_on_page)[-1].click()
 
     def name_of_clicked_lot(self):
-        return self.find_elements(names_of_lots)[0].text
+        return self.find_elements(names_of_lots)[-1].text
 
     def actual_lot_name(self):
         return self.find_element(actual_lot_name).text

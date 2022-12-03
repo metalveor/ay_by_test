@@ -1,4 +1,5 @@
 import pytest
+import allure
 from pages.all_lots_page import AllLotsPage
 
 
@@ -12,36 +13,43 @@ class TestHeadFilters:
     def test_change_type_of_auction(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
-        all_lots_page.change_type_auction()
-        assert all_lots_page.change_type_auction_request() in all_lots_page.check_changed_type_auction(),\
+        all_lots_page.click_all_lots_button()
+        all_lots_page.select_wish_type_auction()
+        assert all_lots_page.request_type_auction() in all_lots_page.check_actual_type_auction(),\
             'Type of auction wasnt changed'
 
     def test_change_relevance_of_auction(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
-        all_lots_page.change_relevance_auction()
+        all_lots_page.click_relevant_button()
+        all_lots_page.select_wish_relevance_auction()
         assert all_lots_page.first_lot_on_page() >= all_lots_page.last_lot_on_page(),\
             'Relevance of auction wasnt changed'
 
     def test_change_list_view(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
-        all_lots_page.change_list_view()
-        assert all_lots_page.type_of_list_request() in all_lots_page.check_selected_view(), \
+        all_lots_page.click_settings_button()
+        all_lots_page.select_type_of_view()
+        assert all_lots_page.type_of_list_request() in all_lots_page.check_actual_view(), \
             'List view wasnt changed'
 
     def test_change_list_image_size(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
-        all_lots_page.change_list_image_size()
-        assert 'size-s' in all_lots_page.check_selected_image_size(), 'List image size wasnt changed'
+        all_lots_page.click_settings_button()
+        all_lots_page.select_type_of_view()
+        all_lots_page.click_settings_button()
+        all_lots_page.select_list_image_size()
+        assert 'size-s' in all_lots_page.check_actual_image_size(), 'List image size wasnt changed'
 
     def test_change_number_of_lots_per_page(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
-        all_lots_page.change_amount_lots_per_page()
-        assert all_lots_page.amount_of_lots_request() == all_lots_page.check_amount_of_lots(), \
-            'Amount of lots per page wasnt changed'  # mark
+        all_lots_page.click_settings_button()
+        all_lots_page.select_number_lots_per_page()
+        assert all_lots_page.number_of_lots_request() == all_lots_page.check_actual_number_of_lots(), \
+            'Number of lots per page wasnt changed'  # mark
 
 
 class TestFootFilters:
@@ -75,7 +83,7 @@ class TestSideFilters:
     def test_check_box_filter_set(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
-        all_lots_page.checkbox_set()
+        all_lots_page.click_checkbox_set()
         filtered_lots = all_lots_page.count_filtered_lots()
         all_lots_page.click_show_result_button()
         assert filtered_lots == all_lots_page.total_lots_showed()

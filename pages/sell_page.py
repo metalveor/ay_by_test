@@ -10,7 +10,8 @@ sell_page_url = 'http://ay.by/sell/'
 home_page_url = 'http://ay.by/'
 
 drag_button = (By.CSS_SELECTOR, 'a[id="framedrag"]')
-drag_to = (By.CSS_SELECTOR, 'div[style="height: 57px"]')
+drag_to = (By.CSS_SELECTOR, 'div[class="footer-compact__inner footer-compact__inner_bottom"]')
+field_size = (By.CSS_SELECTOR, 'iframe[id="textareaWidgIframe"]')
 attach_button = (By.CSS_SELECTOR, 'input[type="file"]')
 file_img = (By.CSS_SELECTOR, 'img[class="fileup_img"]')
 submit_button = (By.CSS_SELECTOR, 'span[id="submit_button"]')
@@ -51,15 +52,16 @@ class SellPage(BasePage):
     def open_sell_page(self):
         self.open_page(sell_page_url)
         self.authorization()
-        sleep(1)  # page loading
         self.open_page(sell_page_url)
 
-    # def click_drag_button(self, driver):
-    #     ActionChains(driver).drag_and_drop(drag_button, drag_to)
+    def click_drag_button(self, driver):
+        ActionChains(driver).click_and_hold(self.find_element(drag_button)).move_to_element_with_offset(self.find_element(drag_to), 0, 0).perform()
+
+    def check_size(self):
+        return self.find_element(field_size).value_of_css_property("height")
 
     def attach_file(self, lot_img):
         self.find_elements(attach_button)[1].send_keys(os.path.join(os.path.dirname(__file__), lot_img))
-        sleep(1)  # img loading
 
     def attach_file_is_displayed(self):
         return self.find_element(file_img).is_displayed()

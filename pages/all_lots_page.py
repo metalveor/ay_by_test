@@ -51,18 +51,22 @@ class AllLotsPage(BasePage):
     def all_lots_is_displayed(self):
         return self.find_element(all_lots_button).is_displayed()
 
-    def change_type_auction(self):
+    def click_all_lots_button(self):
         self.find_element(all_lots_button).click()
+
+    def select_wish_type_auction(self):
         self.find_element(for_free_button).click()
 
-    def change_type_auction_request(self):
+    def request_type_auction(self):
         return self.find_element(for_free_button).text.lower()
 
-    def check_changed_type_auction(self):
+    def check_actual_type_auction(self):
         return self.find_element(main_title).text.lower()
 
-    def change_relevance_auction(self):
+    def click_relevant_button(self):
         self.find_element(relevant_button).click()
+
+    def select_wish_relevance_auction(self):
         self.find_element(expensive_button).click()
 
     def first_lot_on_page(self):
@@ -71,8 +75,10 @@ class AllLotsPage(BasePage):
     def last_lot_on_page(self):
         return self.find_element(last_lot).text
 
-    def change_list_view(self):
+    def click_settings_button(self):
         self.find_element(settings_button).click()
+
+    def select_type_of_view(self):
         self.find_element(list_view_button).click()
 
     def type_of_list_request(self):
@@ -81,25 +87,22 @@ class AllLotsPage(BasePage):
         else:
             return 'type-grid'
 
-    def check_selected_view(self):
+    def check_actual_view(self):
         return self.find_element(sorted_list).get_attribute("class")
 
-    def change_list_image_size(self):
-        self.change_list_view()
-        self.find_element(settings_button).click()
+    def select_list_image_size(self):
         self.find_elements(little_button)[1].click()
 
-    def check_selected_image_size(self):
+    def check_actual_image_size(self):
         return self.find_element(sorted_list).get_attribute("class")
 
-    def change_amount_lots_per_page(self):
-        self.find_element(settings_button).click()
+    def select_number_lots_per_page(self):
         self.find_element(lots_amount_button).click()
 
-    def amount_of_lots_request(self):
+    def number_of_lots_request(self):
         return int(self.find_element(lots_amount_button).get_attribute("innerText"))
 
-    def check_amount_of_lots(self):
+    def check_actual_number_of_lots(self):
         return len(self.find_elements(all_lots_on_page))-6
 
     def click_next_page_button(self):
@@ -123,7 +126,7 @@ class AllLotsPage(BasePage):
     def name_of_clicked_section(self):
         return self.find_elements(all_sections)[-1].text
 
-    def checkbox_set(self):
+    def click_checkbox_set(self):
         self.find_element(relisted_button).click()
         self.find_element(type_button).click()
         self.find_element(condition_button).click()

@@ -1,10 +1,11 @@
 import pytest
+import allure
 from pages.sell_page import SellPage
 import settings
 from time import sleep
 
 
-class TestCreateLot:
+class TestCreateNewLot:
 
     lot_name = 'Тестовый рубль-заяц'
 
@@ -46,11 +47,17 @@ class TestCreateLot:
         sell_page.click_submit_button()
         assert sell_page.alert_message_is_displayed()
 
+
+class TestFields:
+
     def test_change_description_frame_size(self, driver):
         sell_page = SellPage(driver)
         sell_page.open_sell_page()
         sell_page.scroll_page_to_bottom()
+        size_before = sell_page.check_size()
         sell_page.click_drag_button(driver)
+        size_after = sell_page.check_size()
+        assert size_before < size_after
 
     def test_attach_file(self, driver):
         sell_page = SellPage(driver)
