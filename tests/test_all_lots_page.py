@@ -5,11 +5,21 @@ from pages.all_lots_page import AllLotsPage
 
 class TestHeadFilters:
 
+    @allure.feature('All Lots Page')
+    @allure.story('Head filters of lots')
+    @allure.description('Displaying of all lots on page Test')
+    @allure.title('All lots are displayed')
+    @allure.severity('major')
     def test_all_lots_is_displayed(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
         assert all_lots_page.all_lots_is_displayed(), 'All lots isnt displayed'
 
+    @allure.feature('All Lots Page')
+    @allure.story('Head filters of lots')
+    @allure.description('Changing type of auction Test')
+    @allure.title('Change type of auction')
+    @allure.severity('major')
     def test_change_type_of_auction(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
@@ -18,6 +28,11 @@ class TestHeadFilters:
         assert all_lots_page.request_type_auction() in all_lots_page.check_actual_type_auction(),\
             'Type of auction wasnt changed'
 
+    @allure.feature('All Lots Page')
+    @allure.story('Head filters of lots')
+    @allure.description('Changing relevance of auction Test')
+    @allure.title('Change relevance of auction')
+    @allure.severity('major')
     def test_change_relevance_of_auction(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
@@ -26,23 +41,38 @@ class TestHeadFilters:
         assert all_lots_page.first_lot_on_page() >= all_lots_page.last_lot_on_page(),\
             'Relevance of auction wasnt changed'
 
-    def test_change_list_view(self, driver):
+    @allure.feature('All Lots Page')
+    @allure.story('Head filters of lots')
+    @allure.description('Changing type of lots view Test')
+    @allure.title('Change type of view')
+    @allure.severity('minor')
+    def test_change_type_of_view(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
         all_lots_page.click_settings_button()
         all_lots_page.select_type_of_view()
-        assert all_lots_page.type_of_list_request() in all_lots_page.check_actual_view(), \
-            'List view wasnt changed'
+        assert all_lots_page.type_of_view_request() in all_lots_page.check_actual_view(), \
+            'Type of lots view wasnt changed'
 
-    def test_change_list_image_size(self, driver):
+    @allure.feature('All Lots Page')
+    @allure.story('Head filters of lots')
+    @allure.description('Changing size of image in list Test')
+    @allure.title('Change list image size')
+    @allure.severity('minor')
+    def test_change_image_size_in_list(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
         all_lots_page.click_settings_button()
         all_lots_page.select_type_of_view()
         all_lots_page.click_settings_button()
-        all_lots_page.select_list_image_size()
-        assert 'size-s' in all_lots_page.check_actual_image_size(), 'List image size wasnt changed'
+        all_lots_page.select_image_size()
+        assert 'size-s' in all_lots_page.check_actual_image_size(), 'Size of image in list wasnt changed'
 
+    @allure.feature('All Lots Page')
+    @allure.story('Head filters of lots')
+    @allure.description('Changing number of lots per page Test')
+    @allure.title('Change number of lots per page')
+    @allure.severity('minor')
     def test_change_number_of_lots_per_page(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
@@ -54,6 +84,11 @@ class TestHeadFilters:
 
 class TestFootFilters:
 
+    @allure.feature('All Lots Page')
+    @allure.story('Foot filters of lots')
+    @allure.description('Test of next page button')
+    @allure.title('Next page button')
+    @allure.severity('major')
     def test_next_page_button(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
@@ -62,6 +97,11 @@ class TestFootFilters:
         all_lots_page.click_next_page_button()
         assert all_lots_page.current_page_number() == start_page + 1
 
+    @allure.feature('All Lots Page')
+    @allure.story('Foot filters of lots')
+    @allure.description('Test of last page button')
+    @allure.title('Last page button')
+    @allure.severity('major')
     def test_last_page_button(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
@@ -73,14 +113,24 @@ class TestFootFilters:
 
 class TestSideFilters:
 
-    def test_all_section_filter(self, driver):
+    @allure.feature('All Lots Page')
+    @allure.story('Side filters of lots')
+    @allure.description('Testing the filter of all section')
+    @allure.title('Filter of all section')
+    @allure.severity('major')
+    def test_filter_of_section(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
         clicked_section_name = all_lots_page.name_of_clicked_section()
         all_lots_page.click_any_section()
         assert clicked_section_name == all_lots_page.actual_section_name()
 
-    def test_check_box_filter_set(self, driver):
+    @allure.feature('All Lots Page')
+    @allure.story('Side filters of lots')
+    @allure.description('Testing the filter by checkbox set ')
+    @allure.title('Filter by checkbox set')
+    @allure.severity('major')
+    def test_filter_by_checkbox_set(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
         all_lots_page.click_checkbox_set()
@@ -88,24 +138,25 @@ class TestSideFilters:
         all_lots_page.click_show_result_button()
         assert filtered_lots == all_lots_page.total_lots_showed()
 
+    @allure.feature('All Lots Page')
+    @allure.story('Side filters of lots')
+    @allure.description('Testing the price filter')
+    @allure.title('Price filter')
+    @allure.severity('major')
     def test_price_filter(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
-        all_lots_page.enter_price_details('100,00', '100,00')
+        all_lots_page.enter_price_details(100, 100)
         all_lots_page.click_show_result_button()
         assert all_lots_page.first_lot_on_page() == all_lots_page.last_lot_on_page()
         assert all_lots_page.first_lot_on_page() == '100,00'
         assert all_lots_page.last_lot_on_page() == '100,00'
 
-    def test_choose_lots_location(self, driver):
-        all_lots_page = AllLotsPage(driver)
-        all_lots_page.open_all_lots_page()
-        all_lots_page.click_button_chosen_location()
-        all_lots_page.click_show_result_button()
-        name_of_request_location = all_lots_page.location_request()
-        all_lots_page.click_any_lot()
-        assert name_of_request_location in all_lots_page.actual_lot_location()
-
+    @allure.feature('All Lots Page')
+    @allure.story('Side filters of lots')
+    @allure.description('Testing the seller rating filter')
+    @allure.title('Seller rating filter')
+    @allure.severity('major')
     def test_seller_rating_filter(self, driver):
         all_lots_page = AllLotsPage(driver)
         all_lots_page.open_all_lots_page()
@@ -114,3 +165,17 @@ class TestSideFilters:
         all_lots_page.click_show_result_button()
         all_lots_page.click_any_lot()
         assert rating_percent_request <= all_lots_page.actual_seller_rating()
+
+    @allure.feature('All Lots Page')
+    @allure.story('Side filters of lots')
+    @allure.description('Choose lots location Test')
+    @allure.title('Choose lots location')
+    @allure.severity('major')
+    def test_choose_lots_location(self, driver):
+        all_lots_page = AllLotsPage(driver)
+        all_lots_page.open_all_lots_page()
+        all_lots_page.click_button_chosen_location()
+        all_lots_page.click_show_result_button()
+        name_of_request_location = all_lots_page.location_request()
+        all_lots_page.click_any_lot()
+        assert name_of_request_location in all_lots_page.actual_lot_location()

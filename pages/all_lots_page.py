@@ -1,10 +1,5 @@
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import Select
-from time import sleep
-
 
 all_lots_page_url = 'http://ay.by/topic.phtml?f=1'
 
@@ -36,8 +31,10 @@ choose_location_button = (By.CSS_SELECTOR, 'label[for="city_id_5"]')
 request_location = (By.CSS_SELECTOR, 'a[class="filters__sqcheckers__item"]')
 lots_location = (By.CSS_SELECTOR, 'div[class="b-seller-info__line"]')
 five_star = (By.CSS_SELECTOR, 'div[class="filters__rating__stars"]')
-clicked_star = (By.CSS_SELECTOR, 'span[class="fm-star filters__rating__star filters__rating__star_3 filters__rating__star_sel filters__rating__checked"]')
-seller_info = (By.CSS_SELECTOR, 'span[class="b-seller-info-summary__rating-stars b-seller-info-summary__rating-stars_5"]')
+clicked_star = (By.CSS_SELECTOR,
+                'span[class="fm-star filters__rating__star filters__rating__star_3 filters__rating__star_sel filters__rating__checked"]')
+seller_info = (By.CSS_SELECTOR,
+               'span[class="b-seller-info-summary__rating-stars b-seller-info-summary__rating-stars_5"]')
 block = (By.CSS_SELECTOR, 'div[class="filters__rating"]')
 
 
@@ -81,7 +78,7 @@ class AllLotsPage(BasePage):
     def select_type_of_view(self):
         self.find_element(list_view_button).click()
 
-    def type_of_list_request(self):
+    def type_of_view_request(self):
         if self.find_element(list_view_button).get_attribute("innerText") == 'Список':
             return 'type-list'
         else:
@@ -90,7 +87,7 @@ class AllLotsPage(BasePage):
     def check_actual_view(self):
         return self.find_element(sorted_list).get_attribute("class")
 
-    def select_list_image_size(self):
+    def select_image_size(self):
         self.find_elements(little_button)[1].click()
 
     def check_actual_image_size(self):
@@ -103,7 +100,7 @@ class AllLotsPage(BasePage):
         return int(self.find_element(lots_amount_button).get_attribute("innerText"))
 
     def check_actual_number_of_lots(self):
-        return len(self.find_elements(all_lots_on_page))-6
+        return len(self.find_elements(all_lots_on_page))-6  # mark
 
     def click_next_page_button(self):
         self.find_element(next_page_button).click()
@@ -163,4 +160,5 @@ class AllLotsPage(BasePage):
         return int(self.find_element(clicked_star).get_attribute("data-value"))
 
     def actual_seller_rating(self):
-        return float(''.join(x for x in self.find_element(seller_info).get_attribute("title") if x.isdigit() or x == "."))
+        return \
+            float(''.join(x for x in self.find_element(seller_info).get_attribute("title") if x.isdigit() or x == "."))

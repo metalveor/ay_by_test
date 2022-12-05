@@ -1,8 +1,6 @@
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
-import settings
 from time import sleep
 
 home_page_url = 'http://ay.by/'
@@ -10,9 +8,8 @@ home_page_url = 'http://ay.by/'
 login_button = (By.CSS_SELECTOR, 'li[class="top-panel__userbar__li"]')
 user_name_field = (By.CSS_SELECTOR, 'span[class="top-panel__userbar__user__name"]')
 user_name_field_elements = (By.CSS_SELECTOR, 'span[class="top-panel__userbar__ppnav__name"]')
-login_alert = (By.CSS_SELECTOR, 'div[class="i-input-group__popover i-input-group__popover_login i-input-group__popover_visible"]')
-
-
+login_alert = (By.CSS_SELECTOR,
+               'div[class="i-input-group__popover i-input-group__popover_login i-input-group__popover_visible"]')
 search_answer = (By.CSS_SELECTOR, 'h1[class="section-title section-title_small"]')
 sections = (By.CSS_SELECTOR, 'li[class="main-nav__list__li main-nav__list__li_wnav"]')
 change_section_request = (By.CSS_SELECTOR, 'a[href="http://coins.ay.by/belarus-posle-1991/"]')
@@ -21,7 +18,8 @@ all_lots_on_page = (By.CSS_SELECTOR, 'div[class="item-type-card__inner"]')
 add_to_favor_button = (By.CSS_SELECTOR, 'div[class="b-lot-title__sub-aside"]')
 product_header = (By.CSS_SELECTOR, 'h1[class="b-lot-title__title"]')
 my_location = (By.CSS_SELECTOR, 'li[class="top-panel__hnav__li top-panel__hnav__withdrop"]')
-wish_location = (By.CSS_SELECTOR, 'a[href="http://ay.by/personal/city.phtml?cid=5&cid_only=0&next=http%3A%2F%2Fay.by%2F"]')
+wish_location = (By.CSS_SELECTOR,
+                 'a[href="http://ay.by/personal/city.phtml?cid=5&cid_only=0&next=http%3A%2F%2Fay.by%2F"]')
 main_logo = (By.CSS_SELECTOR, 'div[class="top-panel__logo"]')
 featured_lots_request = (By.CSS_SELECTOR, 'a[href="http://ay.by/popular/"]')
 featured_lots_result = (By.CSS_SELECTOR, 'a[href="http://ay.by/topic.phtml?topic=popular"]')
@@ -42,9 +40,6 @@ class HomePage(BasePage):
 
     def open_home_page(self):
         self.open_page(home_page_url)
-
-    def login_passed(self):
-        return self.find_element(user_name_field).is_displayed()
 
     def login_failed(self):
         return self.find_element(login_alert).is_displayed()
@@ -70,7 +65,7 @@ class HomePage(BasePage):
     def change_section_result(self):
         return self.find_element(change_section_result).text.lower()
 
-    def add_product_to_favor(self):
+    def add_lot_to_favor(self):
         self.find_element(add_to_favor_button).click()
         sleep(1)  # page loading
 
@@ -136,4 +131,3 @@ class HomePage(BasePage):
 
     def title_of_creating_lot_page(self):
         return self.find_element(title_of_create).text
-

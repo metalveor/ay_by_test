@@ -1,16 +1,12 @@
 from selenium.webdriver.chrome.webdriver import WebDriver  # for select annotation
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-import settings
-from time import sleep
 
 by_email = (By.CSS_SELECTOR, 'a[class="i-nav-tabs__link"]')
 email_field = (By.CSS_SELECTOR, 'input[type="email"]')
 password_field = (By.CSS_SELECTOR, 'input[type="password"]')
 enter_button = (By.CSS_SELECTOR, 'button[form="loginForm"]')
-add_favor_button = (By.CSS_SELECTOR, 'div[class="b-lot-title__sub-aside"]')
 login_button = (By.CSS_SELECTOR, 'li[class="top-panel__userbar__li"]')
-
+user_name_field = (By.CSS_SELECTOR, 'span[class="top-panel__userbar__user__name"]')
 search_field = (By.CSS_SELECTOR, 'input[id="top-s"]')
 find_button = (By.CSS_SELECTOR, 'button[class="top-panel__search__btn"]')
 
@@ -45,10 +41,8 @@ class BasePage:
     def click_enter_button(self):
         self.find_element(enter_button).click()
 
-    def authorization(self):
-        self.enter_login_details(email=settings.email, password=settings.password)
-        self.click_enter_button()
-        sleep(1)  # page loading
+    def login_passed(self):
+        return self.find_element(user_name_field).is_displayed()
 
     def click_search_field(self):
         self.find_element(search_field).click()

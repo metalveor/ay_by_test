@@ -1,15 +1,18 @@
 import pytest
 import allure
 from pages.sell_page import SellPage
-import settings
-from time import sleep
 
 
 class TestCreateNewLot:
 
     lot_name = 'Тестовый рубль-заяц'
 
-    def test_lot_creation_passed(self, driver):
+    @allure.feature('Sell Page')
+    @allure.story('Create new lot')
+    @allure.description('Test of successful passed lot creation. Check that lot placed at auction')
+    @allure.title(f'Creation of lot <{lot_name}> passed successful')
+    @allure.severity('critical')
+    def test_lot_creation_passed(self, driver, authorization):
         sell_page = SellPage(driver)
         sell_page.open_sell_page()
         sell_page.enter_name_details(self.lot_name)
@@ -38,29 +41,46 @@ class TestCreateNewLot:
         sell_page.enter_details_field('TMS Testing')
         sell_page.enter_description_field('TMS Testing of lot creation ')
         sell_page.click_submit_button()
-        assert sell_page.check_my_lot_in_searching(self.lot_name)
-        assert sell_page.check_my_lot_in_profile()
+        assert sell_page.check_my_lot_in_searching(self.lot_name),\
+            f'New lot <{self.lot_name}> didnt find in global searching'
+        assert sell_page.check_my_lot_in_profile(), f'New lot <{self.lot_name}> didnt create'
 
-    def test_lot_creation_failed(self, driver):
+    @allure.feature('Sell Page')
+    @allure.story('Create new lot')
+    @allure.description('Test of failed lot creation. Check that alert message is displayed')
+    @allure.title('Creation of lot failed')
+    @allure.severity('major')
+    def test_lot_creation_failed(self, driver, authorization):
         sell_page = SellPage(driver)
         sell_page.open_sell_page()
+        sell_page.scroll_page_to_bottom()
         sell_page.click_submit_button()
-        assert sell_page.alert_message_is_displayed()
+        assert sell_page.alert_message_is_displayed(), 'Alert message didnt displayed'
 
 
 class TestFields:
 
-    def test_change_description_frame_size(self, driver):
+    @allure.feature('Sell Page')
+    @allure.story('Testing of fields')
+    @allure.description('Description frame resizing Test')
+    @allure.title('Description frame resizing')
+    @allure.severity('minor')
+    def test_change_description_frame_size(self, driver, authorization):
         sell_page = SellPage(driver)
         sell_page.open_sell_page()
         sell_page.scroll_page_to_bottom()
         size_before = sell_page.check_size()
         sell_page.click_drag_button(driver)
         size_after = sell_page.check_size()
-        assert size_before < size_after
+        assert size_before < size_after, 'Resizing of description frame failed'
 
-    def test_attach_file(self, driver):
+    @allure.feature('Sell Page')
+    @allure.story('Testing of fields')
+    @allure.description('Test of attaching file')
+    @allure.title('Attach File')
+    @allure.severity('major')
+    def test_attach_file(self, driver, authorization):
         sell_page = SellPage(driver)
         sell_page.open_sell_page()
         sell_page.attach_file('my_lot.jpg')
-        assert sell_page.attach_file_is_displayed()
+        assert sell_page.attach_file_is_displayed(), 'File attachment failed'

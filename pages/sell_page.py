@@ -1,9 +1,7 @@
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import Select
-from time import sleep
 import os
 
 sell_page_url = 'http://ay.by/sell/'
@@ -15,7 +13,7 @@ field_size = (By.CSS_SELECTOR, 'iframe[id="textareaWidgIframe"]')
 attach_button = (By.CSS_SELECTOR, 'input[type="file"]')
 file_img = (By.CSS_SELECTOR, 'img[class="fileup_img"]')
 submit_button = (By.CSS_SELECTOR, 'span[id="submit_button"]')
-alert_message = (By.CSS_SELECTOR, 'th[id="message-error-all-id"]')
+alert_message = (By.CSS_SELECTOR, 'div[class="error_message"]')
 lot_name_field = (By.CSS_SELECTOR, 'input[class="lotaddform-maintitle__ip up-border"]')
 choose_section = (By.CSS_SELECTOR, 'a[onclick="return show_choose_cat();"]')
 collect_section = (By.CSS_SELECTOR, 'a[rel="1101586"]')
@@ -51,11 +49,10 @@ class SellPage(BasePage):
 
     def open_sell_page(self):
         self.open_page(sell_page_url)
-        self.authorization()
-        self.open_page(sell_page_url)
 
     def click_drag_button(self, driver):
-        ActionChains(driver).click_and_hold(self.find_element(drag_button)).move_to_element_with_offset(self.find_element(drag_to), 0, 0).perform()
+        ActionChains(driver).click_and_hold(self.find_element(drag_button))\
+            .move_to_element_with_offset(self.find_element(drag_to), 0, 0).perform()
 
     def check_size(self):
         return self.find_element(field_size).value_of_css_property("height")
@@ -155,6 +152,3 @@ class SellPage(BasePage):
         self.open_page(home_page_url)
         self.find_element(my_profile_button).click()
         return self.find_element(my_lot_in_profile).is_displayed()
-
-
-
