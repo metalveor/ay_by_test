@@ -131,7 +131,7 @@ class AllLotsPage(BasePage):
     def click_show_result_button(self):
         self.find_element(show_button).click()
 
-    def count_filtered_lots(self):
+    def number_filtered_lots(self):
         return int(''.join(x for x in self.find_element(show_button).text if x.isdigit()))
 
     def total_lots_showed(self):

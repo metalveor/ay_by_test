@@ -15,9 +15,6 @@ class BasePage:
     def __init__(self, driver: WebDriver):
         self.driver = driver
 
-    def implicitly_wait(self):
-        self.driver.implicitly_wait(10)
-
     def open_page(self, page_url):
         self.driver.get(page_url)
 

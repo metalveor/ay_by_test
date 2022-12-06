@@ -13,11 +13,16 @@ class TestLogIn:
     @allure.severity('critical')
     def test_login_passed(self, driver):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.click_login_button()
-        home_page.enter_login_details(email=settings.email, password=settings.password)
-        home_page.click_enter_button()
-        assert home_page.login_passed(), 'Login failed'
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Click login button'):
+            home_page.click_login_button()
+        with allure.step(f'Enter email = {settings.email} and password = {settings.password}'):
+            home_page.enter_login_details(email=settings.email, password=settings.password)
+        with allure.step('Click enter button'):
+            home_page.click_enter_button()
+        with allure.step('Check that login passed successful'):
+            assert home_page.login_passed(), 'Login failed'
 
     CREDENTIALS = [
         {'login': 'qap2021@mail.ru', 'passwd': 'VuYay7'},
@@ -32,11 +37,16 @@ class TestLogIn:
     @pytest.mark.parametrize('creds', CREDENTIALS)
     def test_login_failed(self, driver, creds):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.click_login_button()
-        home_page.enter_login_details(email=creds['login'], password=creds['passwd'])
-        home_page.click_enter_button()
-        assert home_page.login_failed(), 'Login passed'
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Click login button'):
+            home_page.click_login_button()
+        with allure.step(f"Enter email = {creds['login']} and password = {creds['passwd']}"):
+            home_page.enter_login_details(email=creds['login'], password=creds['passwd'])
+        with allure.step('Click enter button'):
+            home_page.click_enter_button()
+        with allure.step('Check that login failed and alert message is displayed'):
+            assert home_page.login_failed(), 'Login passed'
 
     @allure.feature('Home Page')
     @allure.story('Authorization')
@@ -45,9 +55,12 @@ class TestLogIn:
     @allure.severity('critical')
     def test_logout(self, driver, authorization):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.logout(driver)
-        assert home_page.logout_passed(), 'Logout failed'
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Clock logout button'):
+            home_page.logout(driver)
+        with allure.step('Check that logout passed successful'):
+            assert home_page.logout_passed(), 'Logout failed'
 
 
 class TestContent:
@@ -61,11 +74,16 @@ class TestContent:
     @pytest.mark.parametrize('sub', SUBJECT)
     def test_search_field(self, driver, sub):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.click_search_field()
-        home_page.enter_search_details(sub)
-        home_page.click_find_button()
-        assert 'найдено' in home_page.search_result(), 'Not found'
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Click on search field'):
+            home_page.click_search_field()
+        with allure.step(f'Enter searching lot {sub}'):
+            home_page.enter_search_details(sub)
+        with allure.step('Click find button'):
+            home_page.click_find_button()
+        with allure.step(f'Check that lot {sub} is "найдено"'):
+            assert 'найдено' in home_page.search_result(), 'Not found'
 
     ERROR_SUBJECT = [
         {'answer': 'топор', 'request': 'njgjh'},
@@ -81,11 +99,16 @@ class TestContent:
     @pytest.mark.parametrize('e_sub', ERROR_SUBJECT)
     def test_recognition_of_error_input(self, driver, e_sub):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.click_search_field()
-        home_page.enter_search_details(e_sub['request'])
-        home_page.click_find_button()
-        assert e_sub['answer'] in home_page.search_result()
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Click on search field'):
+            home_page.click_search_field()
+        with allure.step(f"Enter searching lot {e_sub['request']}"):
+            home_page.enter_search_details(e_sub['request'])
+        with allure.step('Click find button'):
+            home_page.click_find_button()
+        with allure.step(f"Check that {e_sub['request']} war recognition and {e_sub['answer']} was find"):
+            assert e_sub['answer'] in home_page.search_result()
 
     @allure.feature('Home Page')
     @allure.story('Side filters of lots')
@@ -94,9 +117,12 @@ class TestContent:
     @allure.severity('major')
     def test_change_section(self, driver):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.change_section(driver)
-        assert home_page.change_section_request() == home_page.change_section_result(), 'Section not changed'
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Change section'):
+            home_page.change_section(driver)
+        with allure.step('Check that section was change'):
+            assert home_page.change_section_request() == home_page.change_section_result(), 'Section not changed'
 
     @allure.feature('Home Page')
     @allure.story('Content')
@@ -105,22 +131,30 @@ class TestContent:
     @allure.severity('critical')
     def test_go_to_any_lot_page(self, driver):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        clicked_lot_name = home_page.name_of_clicked_lot()
-        home_page.click_any_lot()
-        assert clicked_lot_name == home_page.actual_lot_name(), 'Page didnt open'
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Get name of clicked lot'):
+            clicked_lot_name = home_page.name_of_clicked_lot()
+        with allure.step('Click any lot'):
+            home_page.click_any_lot()
+        with allure.step('Check that clicked lot page was open'):
+            assert clicked_lot_name == home_page.actual_lot_name(), 'Page didnt open'
 
     @allure.feature('Home Page')
     @allure.story('Content')
-    @allure.description('Test of add lot to favorites')
+    @allure.description('Test of adding lot to favorites')
     @allure.title('Add to favorites')
     @allure.severity('major')
     def test_add_to_favorites(self, driver, authorization):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.click_any_lot()
-        home_page.add_lot_to_favor()
-        assert 'в избранном' in home_page.check_lot_added_in_favor(), 'Not in favorites'
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Click any lot'):
+            home_page.click_any_lot()
+        with allure.step('Click add to favorites button'):
+            home_page.add_lot_to_favor()
+        with allure.step('Check that lot in favorites'):
+            assert 'в избранном' in home_page.check_lot_added_in_favor(), 'Not in favorites'
 
     @allure.feature('Home Page')
     @allure.story('Head filters of lots')
@@ -129,11 +163,15 @@ class TestContent:
     @allure.severity('major')
     def test_choose_featured_lots(self, driver):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        request_featured_lots = home_page.featured_lots_request()
-        home_page.choose_featured_lots()
-        assert request_featured_lots == home_page.featured_lots_result(),\
-            'Featured lots not selected'
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Get section name of featured lots'):
+            request_featured_lots = home_page.featured_lots_request()
+        with allure.step('Choose featured lots: "Популярные"'):
+            home_page.choose_featured_lots()
+        with allure.step('Check that current lots is "Популярные"'):
+            assert request_featured_lots == home_page.featured_lots_result(),\
+                'Featured lots not selected'
 
     @allure.feature('Home Page')
     @allure.story('Head filters of lots')
@@ -142,20 +180,26 @@ class TestContent:
     @allure.severity('major')
     def test_reset_featured_lots(self, driver):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.choose_featured_lots()
-        home_page.reset_featured_lots()
-        assert home_page.all_lots_is_displayed(), 'All lots isnt displayed '
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Choose featured lots: "Популярные"'):
+            home_page.choose_featured_lots()
+        with allure.step('Click reset button'):
+            home_page.reset_featured_lots()
+        with allure.step('Check that all lots are displayed'):
+            assert home_page.all_lots_is_displayed(), 'All lots isnt displayed '
 
     @allure.feature('Home Page')
     @allure.story('Content')
     @allure.description('Testing that total number of lots on Home page meets the requirements')  # mark
-    @allure.title('Total number of lots')
+    @allure.title('Total number of lots on Home page')
     @allure.severity('minor')
     def test_total_number_of_lots(self, driver):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        assert home_page.check_total_number_of_lots() == 15, 'Total number doest meet the requirement'
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Check that on Home page total number of lots are 15'):
+            assert home_page.check_total_number_of_lots() == 15, 'Total number doest meet the requirement'
 
 
 class TestHeader:
@@ -167,8 +211,10 @@ class TestHeader:
     @allure.severity('trivial')
     def test_main_logo_is_displayed(self, driver):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        assert home_page.logo_is_displayed(), 'Logo isnt displayed'
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Check that main logo is displayed'):
+            assert home_page.logo_is_displayed(), 'Logo isnt displayed'
 
     @allure.feature('Home Page')
     @allure.story('Header')
@@ -177,8 +223,10 @@ class TestHeader:
     @allure.severity('trivial')
     def test_my_location_is_displayed(self, driver):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        assert home_page.my_location_is_displayed(), 'My location isnt displayed'
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Check that my location is displayed'):
+            assert home_page.my_location_is_displayed(), 'My location isnt displayed'
 
     @allure.feature('Home Page')
     @allure.story('Header')
@@ -187,10 +235,14 @@ class TestHeader:
     @allure.severity('major')
     def test_change_of_location(self, driver):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.click_location_button()
-        home_page.select_wish_location()
-        assert home_page.actual_location() in home_page.request_location(), 'Location wasnt changed '  # mark
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Click location button'):
+            home_page.click_location_button()
+        with allure.step('Select wish location: "Гродно"'):
+            home_page.select_wish_location()
+        with allure.step('Check that current location is "Гродно"'):
+            assert home_page.actual_location() in home_page.request_location(), 'Location wasnt changed '  # mark
 
     @allure.feature('Home Page')
     @allure.story('Header')
@@ -199,9 +251,12 @@ class TestHeader:
     @allure.severity('critical')
     def test_create_lot_button(self, driver, authorization):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.click_create_lot_button()
-        assert 'Создание лота' == home_page.title_of_creating_lot_page()
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('click crate lot button'):
+            home_page.click_create_lot_button()
+        with allure.step('Check that sell page was open'):
+            assert 'Создание лота' == home_page.title_of_creating_lot_page()
 
 
 class TestFooter:
@@ -213,9 +268,12 @@ class TestFooter:
     @allure.severity('trivial')
     def test_news_ay_by_is_displayed(self, driver):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.scroll_page_to_bottom()
-        assert home_page.news_ay_by_is_displayed()
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Scroll page to bottom'):
+            home_page.scroll_page_to_bottom()
+        with allure.step('Check that Ay.by news are displayed'):
+            assert home_page.news_ay_by_is_displayed()
 
     @allure.feature('Home Page')
     @allure.story('Footer')
@@ -224,9 +282,12 @@ class TestFooter:
     @allure.severity('minor')
     def test_forum_ay_by_is_displayed(self, driver):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.scroll_page_to_bottom()
-        assert home_page.forum_ay_by_is_displayed()
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Scroll page to bottom'):
+            home_page.scroll_page_to_bottom()
+        with allure.step('Check that Ay.by forum are displayed'):
+            assert home_page.forum_ay_by_is_displayed()
 
     @allure.feature('Home Page')
     @allure.story('Footer')
@@ -235,6 +296,9 @@ class TestFooter:
     @allure.severity('trivial')
     def test_ay_by_info_is_displayed(self, driver):
         home_page = HomePage(driver)
-        home_page.open_home_page()
-        home_page.scroll_page_to_bottom()
-        assert home_page.ay_by_info_is_displayed()
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Scroll page to bottom'):
+            home_page.scroll_page_to_bottom()
+        with allure.step('Check that that Ay.by info are displayed'):
+            assert home_page.ay_by_info_is_displayed()
