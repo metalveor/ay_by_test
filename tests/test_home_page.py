@@ -8,6 +8,20 @@ class TestLogIn:
 
     @allure.feature('Home Page')
     @allure.story('Authorization')
+    @allure.description('Testing of login button')
+    @allure.title('login button')
+    @allure.severity('critical')
+    def test_login_button(self, driver):
+        home_page = HomePage(driver)
+        with allure.step('Open Home page'):
+            home_page.open_home_page()
+        with allure.step('Click login button'):
+            home_page.click_login_button()
+        with allure.step('Check that login frame is displayed'):
+            assert home_page.login_frame_is_displayed(), 'Login button didnt work'
+
+    @allure.feature('Home Page')
+    @allure.story('Authorization')
     @allure.description('Test of successful passed LogIn. Check that user name is displayed on home page Header')
     @allure.title('LogIn passed successful')
     @allure.severity('critical')
@@ -141,7 +155,7 @@ class TestContent:
             assert clicked_lot_name == home_page.actual_lot_name(), 'Page didnt open'
 
     @allure.feature('Home Page')
-    @allure.story('Content')
+    @allure.story('Add to favorites')
     @allure.description('Test of adding lot to favorites')
     @allure.title('Add to favorites')
     @allure.severity('major')
@@ -154,7 +168,7 @@ class TestContent:
         with allure.step('Click add to favorites button'):
             home_page.add_lot_to_favor()
         with allure.step('Check that lot in favorites'):
-            assert 'в избранном' in home_page.check_lot_added_in_favor(), 'Not in favorites'
+            assert 'в избранном' in home_page.check_lot_added_in_favor(driver), 'Not in favorites'
 
     @allure.feature('Home Page')
     @allure.story('Head filters of lots')
@@ -253,7 +267,7 @@ class TestHeader:
         home_page = HomePage(driver)
         with allure.step('Open Home page'):
             home_page.open_home_page()
-        with allure.step('click crate lot button'):
+        with allure.step('Click crate lot button'):
             home_page.click_create_lot_button()
         with allure.step('Check that sell page was open'):
             assert 'Создание лота' == home_page.title_of_creating_lot_page()

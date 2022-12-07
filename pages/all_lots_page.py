@@ -1,5 +1,6 @@
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 
 all_lots_page_url = 'http://ay.by/topic.phtml?f=1'
 
@@ -36,6 +37,12 @@ clicked_star = (By.CSS_SELECTOR,
 seller_info = (By.CSS_SELECTOR,
                'span[class="b-seller-info-summary__rating-stars b-seller-info-summary__rating-stars_5"]')
 block = (By.CSS_SELECTOR, 'div[class="filters__rating"]')
+reset_button = (By.CSS_SELECTOR, 'a[class="clear-filter filters__searchbtn__reset"]')
+lot_card = (By.CSS_SELECTOR, 'div[class="item-type-list__figure__outer"]')
+star_button = (By.CSS_SELECTOR, 'span[class="item-type-list__fav"]')
+star_button_active = (By.CSS_SELECTOR, 'span[class="item-type-list__fav item-type-list__fav_full"]')
+star_button_grid = (By.CSS_SELECTOR, 'span[class="item-type-card__fav"]')
+star_button_active_grid = (By.CSS_SELECTOR, 'span[class="item-type-card__fav item-type-card__fav_full"]')
 
 
 class AllLotsPage(BasePage):
@@ -137,6 +144,12 @@ class AllLotsPage(BasePage):
     def total_lots_showed(self):
         return int(''.join(x for x in self.find_element(all_lots_button).text if x.isdigit()))  # mark
 
+    def click_reset_filter_button(self):
+        self.find_element(reset_button).click()
+
+    def check_total_number_of_lots(self):
+        return int(''.join(x for x in self.find_element(all_lots_button).text if x.isdigit()))
+
     def enter_price_details(self, price_from, price_to):
         self.find_element(price_byn_from).send_keys(price_from)
         self.find_element(price_byn_to).send_keys(price_to)
@@ -162,3 +175,17 @@ class AllLotsPage(BasePage):
     def actual_seller_rating(self):
         return \
             float(''.join(x for x in self.find_element(seller_info).get_attribute("title") if x.isdigit() or x == "."))
+
+    def click_star_button(self, driver):
+        ActionChains(driver).move_to_element(self.find_elements(lot_card)[0]).click(
+            self.find_elements(star_button)[0]).perform()
+
+    def star_is_displayed(self):
+        return self.find_element(star_button_active).is_displayed()
+
+    def click_star_button_in_grid(self, driver):
+        ActionChains(driver).move_to_element(self.find_elements(all_lots_on_page)[0]).click(
+            self.find_elements(star_button_grid)[0]).perform()
+
+    def star_in_grid_is_displayed(self):
+        return self.find_element(star_button_active_grid).is_displayed()

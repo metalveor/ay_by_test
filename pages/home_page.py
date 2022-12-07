@@ -1,7 +1,8 @@
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-from time import sleep
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 home_page_url = 'http://ay.by/'
 
@@ -32,6 +33,7 @@ names_of_lots = (By.CSS_SELECTOR, 'p[class="item-type-card__title"]')
 actual_lot_name = (By.CSS_SELECTOR, 'h1[class="b-lot-title__title"]')
 create_lot_button = (By.CSS_SELECTOR, 'li[class="top-panel__userbar__li top-panel__userbar__addlot"]')
 title_of_create = (By.CSS_SELECTOR, 'h1[id="page_title"]')
+login_frame = (By.CSS_SELECTOR, 'div[id="loginPopup"]')
 
 
 class HomePage(BasePage):
@@ -40,6 +42,9 @@ class HomePage(BasePage):
 
     def open_home_page(self):
         self.open_page(home_page_url)
+
+    def login_frame_is_displayed(self):
+        return self.find_element(login_frame).is_displayed()
 
     def login_failed(self):
         return self.find_element(login_alert).is_displayed()
@@ -67,10 +72,12 @@ class HomePage(BasePage):
 
     def add_lot_to_favor(self):
         self.find_element(add_to_favor_button).click()
-        sleep(1)  # page loading
 
-    def check_lot_added_in_favor(self):
-        return self.find_element(add_to_favor_button).text.lower()
+    def check_lot_added_in_favor(self, driver):
+        try:
+            WebDriverWait(driver, 1).until(EC.element_to_be_selected(self.find_element(add_to_favor_button)))
+        finally:
+            return self.find_element(add_to_favor_button).text.lower()
 
     def my_location_is_displayed(self):
         return self.find_element(my_location).is_displayed()

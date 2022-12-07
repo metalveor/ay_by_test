@@ -165,7 +165,7 @@ class TestSideFilters:
 
     @allure.feature('All Lots Page')
     @allure.story('Side filters of lots')
-    @allure.description('Testing the filter by checkbox set ')
+    @allure.description('Testing the filter by checkbox set')
     @allure.title('Filter by checkbox set')
     @allure.severity('major')
     def test_filter_by_checkbox_set(self, driver):
@@ -180,6 +180,26 @@ class TestSideFilters:
             all_lots_page.click_show_result_button()
         with allure.step('Compare number of filtered lots with current number of lots'):
             assert filtered_lots == all_lots_page.total_lots_showed()
+
+    @allure.feature('All Lots Page')
+    @allure.story('Side filters of lots')
+    @allure.description('Reset all filters Test')
+    @allure.title('Reset all filters')
+    @allure.severity('major')
+    def test_reset_all_filters(self, driver):
+        all_lots_page = AllLotsPage(driver)
+        with allure.step('Open All lots page'):
+            all_lots_page.open_all_lots_page()
+        with allure.step('Get number of lots before filtering'):
+            number_before = all_lots_page.check_total_number_of_lots()
+        with allure.step('Click our checkbox set[Новые, Новые, Новое]'):
+            all_lots_page.click_checkbox_set()
+        with allure.step('Click show result button'):
+            all_lots_page.click_show_result_button()
+        with allure.step('Click reset button'):
+            all_lots_page.click_reset_filter_button()
+        with allure.step('Check that number of lots after reset filter equals before filtering'):
+            assert number_before == all_lots_page.check_total_number_of_lots(), 'Reset all filters button didnt work'
 
     @allure.feature('All Lots Page')
     @allure.story('Side filters of lots')
@@ -236,3 +256,38 @@ class TestSideFilters:
             all_lots_page.click_any_lot()
         with allure.step('Check that location of lots is "Гродно"'):
             assert name_of_request_location in all_lots_page.actual_lot_location()
+
+
+class TestStar:
+
+    @allure.feature('All Lots Page')
+    @allure.story('Add to favorites')
+    @allure.description('Test of adding lot to favorites by click star button in list')
+    @allure.title('Click star button in list')
+    @allure.severity('major')
+    def test_click_star_button_in_list(self, driver, authorization):
+        all_lots_page = AllLotsPage(driver)
+        with allure.step('Open All lots page'):
+            all_lots_page.open_all_lots_page()
+        with allure.step('Click settings button'):
+            all_lots_page.click_settings_button()
+        with allure.step('Select type of view "Список"'):
+            all_lots_page.select_type_of_view()
+        with allure.step('Click star button'):
+            all_lots_page.click_star_button(driver)
+        with allure.step('Check that star is active'):
+            assert all_lots_page.star_is_displayed(), "Star button didnt work"
+
+    @allure.feature('All Lots Page')
+    @allure.story('Add to favorites')
+    @allure.description('Test of adding lot to favorites by click star button in grid')
+    @allure.title('Click star button in grid')
+    @allure.severity('major')
+    def test_click_star_button_in_grid(self, driver):
+        all_lots_page = AllLotsPage(driver)
+        with allure.step('Open All lots page'):
+            all_lots_page.open_all_lots_page()
+        with allure.step('Click star button'):
+            all_lots_page.click_star_button_in_grid(driver)
+        with allure.step('Check that star is active'):
+            assert all_lots_page.star_in_grid_is_displayed(), "BAG : Star button didnt work"
