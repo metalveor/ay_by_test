@@ -7,3 +7,4 @@
 4. pip install requirements.txt
 5. pytest -v --reruns 2 -n 2 --alluredir reports
 6. allure serve reports
+7. 
