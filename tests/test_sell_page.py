@@ -68,11 +68,11 @@ class TestCreateNewLot:
             sell_page.enter_description_field('TMS Testing of lot creation ')
         with allure.step('Click submit button'):
             sell_page.click_submit_button()
+        with allure.step('Check in profile that my lot created'):
+            assert sell_page.check_my_lot_in_profile(), f'New lot <{self.lot_name}> didnt create'
         with allure.step('Check that my lot created by searching'):
             assert sell_page.check_my_lot_in_searching(self.lot_name),\
                 f'New lot <{self.lot_name}> didnt find in global searching'
-        with allure.step('Check in profile that my lot created'):
-            assert sell_page.check_my_lot_in_profile(), f'New lot <{self.lot_name}> didnt create'
 
     @allure.feature('Sell Page')
     @allure.story('Create new lot')

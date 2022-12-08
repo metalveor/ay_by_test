@@ -122,7 +122,7 @@ class TestContent:
         with allure.step('Click find button'):
             home_page.click_find_button()
         with allure.step(f"Check that {e_sub['request']} war recognition and {e_sub['answer']} was find"):
-            assert e_sub['answer'] in home_page.search_result()
+            assert e_sub['answer'] in home_page.search_result(), 'text couldnt be recognition'
 
     @allure.feature('Home Page')
     @allure.story('Side filters of lots')
@@ -270,7 +270,7 @@ class TestHeader:
         with allure.step('Click crate lot button'):
             home_page.click_create_lot_button()
         with allure.step('Check that sell page was open'):
-            assert 'Создание лота' == home_page.title_of_creating_lot_page()
+            assert 'Создание лота' == home_page.title_of_creating_lot_page(), 'Create lot button didnt work'
 
 
 class TestFooter:
@@ -287,7 +287,7 @@ class TestFooter:
         with allure.step('Scroll page to bottom'):
             home_page.scroll_page_to_bottom()
         with allure.step('Check that Ay.by news are displayed'):
-            assert home_page.news_ay_by_is_displayed()
+            assert home_page.news_ay_by_is_displayed(), 'Ay.by news did not displayed'
 
     @allure.feature('Home Page')
     @allure.story('Footer')
@@ -301,7 +301,7 @@ class TestFooter:
         with allure.step('Scroll page to bottom'):
             home_page.scroll_page_to_bottom()
         with allure.step('Check that Ay.by forum are displayed'):
-            assert home_page.forum_ay_by_is_displayed()
+            assert home_page.forum_ay_by_is_displayed(), 'Ay.by forum did not displayed'
 
     @allure.feature('Home Page')
     @allure.story('Footer')
@@ -315,4 +315,4 @@ class TestFooter:
         with allure.step('Scroll page to bottom'):
             home_page.scroll_page_to_bottom()
         with allure.step('Check that that Ay.by info are displayed'):
-            assert home_page.ay_by_info_is_displayed()
+            assert home_page.ay_by_info_is_displayed(), 'Ay.by info did not displayed'

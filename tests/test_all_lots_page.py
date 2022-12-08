@@ -31,7 +31,7 @@ class TestHeadFilters:
         with allure.step('Select wish type of auction: "Даром"'):
             all_lots_page.select_wish_type_auction()
         with allure.step('Check that type of auction is "Даром"'):
-            assert all_lots_page.request_type_auction() in all_lots_page.check_actual_type_auction(),\
+            assert all_lots_page.request_type_auction() in all_lots_page.check_actual_type_auction(), \
                 'Type of auction wasnt changed'
 
     @allure.feature('All Lots Page')
@@ -48,7 +48,7 @@ class TestHeadFilters:
         with allure.step('Select wish relevance of auction: "Дорогие"'):
             all_lots_page.select_wish_relevance_auction()
         with allure.step('Check that type of relevance is "Дорогие"'):
-            assert all_lots_page.first_lot_on_page() >= all_lots_page.last_lot_on_page(),\
+            assert all_lots_page.first_lot_on_page() >= all_lots_page.last_lot_on_page(), \
                 'Relevance of auction wasnt changed'
 
     @allure.feature('All Lots Page')
@@ -124,7 +124,7 @@ class TestFootFilters:
         with allure.step('Click next page button'):
             all_lots_page.click_next_page_button()
         with allure.step('Check that we are on the next page'):
-            assert all_lots_page.current_page_number() == start_page + 1
+            assert all_lots_page.current_page_number() == start_page + 1, 'Next page button didnt work'
 
     @allure.feature('All Lots Page')
     @allure.story('Foot filters of lots')
@@ -142,7 +142,7 @@ class TestFootFilters:
         with allure.step('Click last page button'):
             all_lots_page.click_last_page_button()
         with allure.step('Check that we are on the last page'):
-            assert all_lots_page.current_page_number() == last_page
+            assert all_lots_page.current_page_number() == last_page, 'Last page button didnt work'
 
 
 class TestSideFilters:
@@ -161,7 +161,7 @@ class TestSideFilters:
         with allure.step('Click any section: "Электроника"'):
             all_lots_page.click_any_section()
         with allure.step('Check that current section is "Электроника"'):
-            assert clicked_section_name == all_lots_page.actual_section_name()
+            assert clicked_section_name == all_lots_page.actual_section_name(), 'Section not changed'
 
     @allure.feature('All Lots Page')
     @allure.story('Side filters of lots')
@@ -179,7 +179,7 @@ class TestSideFilters:
         with allure.step('Click show result button'):
             all_lots_page.click_show_result_button()
         with allure.step('Compare number of filtered lots with current number of lots'):
-            assert filtered_lots == all_lots_page.total_lots_showed()
+            assert filtered_lots == all_lots_page.total_lots_showed(), 'No filter applied'
 
     @allure.feature('All Lots Page')
     @allure.story('Side filters of lots')
@@ -215,7 +215,8 @@ class TestSideFilters:
         with allure.step('Click show result button'):
             all_lots_page.click_show_result_button()
         with allure.step('Compare price of first lot and last lot on page with enter price'):
-            assert all_lots_page.first_lot_on_page() == '100,00' == all_lots_page.last_lot_on_page()
+            assert all_lots_page.first_lot_on_page() == '100,00' == all_lots_page.last_lot_on_page(),\
+                'No filter applied'
 
     @allure.feature('All Lots Page')
     @allure.story('Side filters of lots')
@@ -235,7 +236,7 @@ class TestSideFilters:
         with allure.step('Click any lot on page'):
             all_lots_page.click_any_lot()
         with allure.step('Check that seller rating in percent is equals five star'):
-            assert rating_percent_request <= all_lots_page.actual_seller_rating()
+            assert rating_percent_request <= all_lots_page.actual_seller_rating(), 'No filter applied'
 
     @allure.feature('All Lots Page')
     @allure.story('Side filters of lots')
@@ -255,7 +256,7 @@ class TestSideFilters:
         with allure.step('Click any lot on page'):
             all_lots_page.click_any_lot()
         with allure.step('Check that location of lots is "Гродно"'):
-            assert name_of_request_location in all_lots_page.actual_lot_location()
+            assert name_of_request_location in all_lots_page.actual_lot_location(), 'Location filter did not work'
 
 
 class TestStar:
