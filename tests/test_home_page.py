@@ -201,7 +201,7 @@ class TestContent:
         with allure.step('Click reset button'):
             home_page.reset_featured_lots()
         with allure.step('Check that all lots are displayed'):
-            assert home_page.all_lots_is_displayed(), 'All lots isnt displayed '
+            assert home_page.all_lots_is_displayed(), 'All lots isnt displayed'
 
     @allure.feature('Home Page')
     @allure.story('Content')
@@ -256,7 +256,7 @@ class TestHeader:
         with allure.step('Select wish location: "Гродно"'):
             home_page.select_wish_location()
         with allure.step('Check that current location is "Гродно"'):
-            assert home_page.actual_location() in home_page.request_location(), 'Location wasnt changed '  # mark
+            assert home_page.actual_location() in home_page.request_location(), 'Location wasnt changed'  # mark
 
     @allure.feature('Home Page')
     @allure.story('Header')

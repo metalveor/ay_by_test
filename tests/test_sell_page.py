@@ -1,4 +1,3 @@
-import pytest
 import allure
 from pages.sell_page import SellPage
 

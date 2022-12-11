@@ -1,4 +1,3 @@
-import pytest
 import allure
 from pages.all_lots_page import AllLotsPage
 
