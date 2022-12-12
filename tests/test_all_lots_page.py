@@ -102,7 +102,7 @@ class TestHeadFilters:
             all_lots_page.select_number_lots_per_page()
         with allure.step('Check that there are "24" lots per page'):
             assert all_lots_page.number_of_lots_request() == all_lots_page.check_actual_number_of_lots(), \
-                'Number of lots per page wasnt changed'  # mark
+                'Number of lots per page wasnt changed'
 
 
 class TestFootFilters:

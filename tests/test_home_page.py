@@ -205,7 +205,7 @@ class TestContent:
 
     @allure.feature('Home Page')
     @allure.story('Content')
-    @allure.description('Testing that total number of lots on Home page meets the requirements')  # mark
+    @allure.description('Testing that total number of lots on Home page meets the requirements')
     @allure.title('Total number of lots on Home page')
     @allure.severity('minor')
     def test_total_number_of_lots(self, driver):
@@ -256,7 +256,7 @@ class TestHeader:
         with allure.step('Select wish location: "Гродно"'):
             home_page.select_wish_location()
         with allure.step('Check that current location is "Гродно"'):
-            assert home_page.actual_location() in home_page.request_location(), 'Location wasnt changed'  # mark
+            assert home_page.actual_location() in home_page.request_location(), 'Location wasnt changed'
 
     @allure.feature('Home Page')
     @allure.story('Header')

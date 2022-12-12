@@ -107,7 +107,7 @@ class AllLotsPage(BasePage):
         return int(self.find_element(lots_amount_button).get_attribute("innerText"))
 
     def check_actual_number_of_lots(self):
-        return len(self.find_elements(all_lots_on_page))-6  # mark
+        return len(self.find_elements(all_lots_on_page))-6
 
     def click_next_page_button(self):
         self.find_element(next_page_button).click()
